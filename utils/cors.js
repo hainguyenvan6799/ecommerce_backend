@@ -1,12 +1,16 @@
+const url =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:3000"
+    : "ecommerce-website-mern.netlify.app";
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: url,
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
   credentials: true,
 };
 
 const socketCors = {
   cors: true,
-  origins: ["http://localhost:3000"],
+  origins: [url],
 };
 
 module.exports = { corsOptions, socketCors };
