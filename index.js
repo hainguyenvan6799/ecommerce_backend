@@ -1,28 +1,49 @@
 require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
+const app = require("./app");
+// const express = require("express");
+// const cors = require("cors");
+// const logger = require("morgan");
 const connectDB = require("./config/DB");
-const routeIndex = require("./routes");
-const { corsOptions } = require("./utils/cors");
-const { connectSocketIO } = require("./services/socketIO");
-const { ChatEvent } = require("./events/ChatEvent");
+// const routeIndex = require("./routes");
+const { corsOptions, socketCors } = require("./utils/cors");
+// const { connectSocketIO } = require("./services/socketIO");
+// const { ChatEvent } = require("./events/ChatEvent");
+const socket = require("./services/test");
+const http = require("http");
+const socketio = require("socket.io");
+
+// utils
+const logger = require("./utils/logger");
+const config = require("./utils/config");
 
 connectDB();
 
-const app = express();
+// const app = express();
 
-app.use(express.json());
-app.use(cors(corsOptions));
+// app.use(logger("dev"));
+// app.use(express.json());
+// app.use(cors(corsOptions));
 
-const chatEvent = new ChatEvent("chat");
-const server = connectSocketIO(app, chatEvent);
+// const chatEvent = new ChatEvent("chat");
+// const server = connectSocketIO(app, chatEvent);
 
-routeIndex(app);
+const server = http.createServer(app);
 
-const PORT = process.env.PORT || 5000;
+// routeIndex(app);
 
-server.listen(PORT, () => {
-  console.log(`Socket.IO server running at http://localhost:${PORT}/`);
+/** catch 404 and forward to error handler */
+// app.use("*", (req, res) => {
+//   return res.status(404).json({
+//     success: false,
+//     message: "API endpoint doesnt exist",
+//   });
+// });
+
+server.listen(config.PORT, () => {
+  logger.info(`server running at http://localhost:${config.PORT}/`);
 });
 
-module.exports = app;
+global.io = socketio(server, socketCors);
+global.io.on("connection", socket.connection);
+
+// module.exports = app;

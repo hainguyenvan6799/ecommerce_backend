@@ -1,10 +1,10 @@
-const User = require("../models/User");
+const { User } = require("../models/User");
 const { verifyPassword, hashPassword } = require("../utils/password");
 const { signToken } = require("../utils/token");
 const validateInputs = require("../utils/validateInput");
 
 const authController = {
-  getCurrentUser: async (req, res) => {
+  getCurrentUserOld: async (req, res) => {
     const userId = req.userId;
     try {
       const user = await User.findById(userId).select("-password");
@@ -17,7 +17,22 @@ const authController = {
         .json({ success: false, message: "Internal server error" });
     }
   },
-  login: async (req, res) => {
+  getCurrentUser: async (req, res) => {
+    const userId = req.userId;
+
+    try {
+      const user = await User.getUserWithoutField(userId, "password");
+
+      if (!user) return res.json({ success: false, message: "User not found" });
+
+      res.json({ success: true, user });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  },
+  loginOld: async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -27,7 +42,7 @@ const authController = {
     }
 
     try {
-      const user = await User.findOne({ username });
+      const user = await User.getUserByUserName(username);
       if (!user) {
         return (
           res
@@ -37,7 +52,7 @@ const authController = {
       }
 
       const passwordValid = await verifyPassword(user.password, password);
-      console.log(passwordValid);
+
       if (!passwordValid) {
         return (
           res
@@ -62,11 +77,18 @@ const authController = {
         .json({ success: false, message: "Internal server error." });
     }
   },
+  login: (req, res) => {
+    return res.json({
+      success: true,
+      message: "User logged in successfully",
+      accessToken: req.accessToken,
+    });
+  },
   signup: async (req, res) => {
     const { firstname, lastname, username, email, password, phone } = req.body;
 
     try {
-      const user = await User.find().or([{ username }, { email }]); //return an array of users
+      const user = await User.checkUserExist(username, email); //return an array of users
       if (user.length) {
         return (
           res

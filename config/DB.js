@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
-const dbName = process.env.DB_USERNAME;
-const dbPassword = process.env.DB_PASSWORD;
+const config = require("../utils/config");
+const dbName = config.MONGODB_USERNAME;
+const dbPassword = config.MONGODB_PASSWORD;
 
 // Connect to mongodb database
 // Account login mongodb: account google hainguyenvan6799.webdev@gmail.com
@@ -19,12 +20,27 @@ const connectDB = async () => {
         useFindAndModify: false,
       }
     );
-
-    console.log("MongoDB connected");
   } catch (error) {
     console.log(error.message);
     process.exit(1);
   }
 };
+
+mongoose.connection.on("connected", () => {
+  console.log("MongoDB connected");
+});
+
+mongoose.connection.on("reconnected", () => {
+  console.log("Mongo has reconnected");
+});
+
+mongoose.connection.on("error", (error) => {
+  console.log("Mongo connection has an error", error);
+  mongoose.disconnect();
+});
+
+mongoose.connection.on("disconnected", () => {
+  console.log("Mongo connection is disconnected");
+});
 
 module.exports = connectDB;

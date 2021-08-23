@@ -37,7 +37,10 @@ const onConnectionIO = (io, event) => {
   io.on("connection", (socket) => {
     console.log("A user connected socketIO");
 
-    socket.on(event.name, (args) => event.doCallback(io, args));
+    // socket.on(event.name, (args) => event.doCallback(io, args));
+    socket.on(event.name, (args) => {
+      console.log(args);
+    });
 
     socket.on("disconnect", () => {
       console.log("User had left!!!");

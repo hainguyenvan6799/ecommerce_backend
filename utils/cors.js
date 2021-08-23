@@ -4,7 +4,7 @@ const url =
     : "https://ecommerce-website-mern.netlify.app";
 const corsOptions = {
   origin: url,
-  methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+  methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
   credentials: true,
 };
 

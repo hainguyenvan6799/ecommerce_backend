@@ -1,0 +1,65 @@
+Arguments: 
+  C:\NodeJS_UserApp\node.exe C:\Users\hai\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @material-ui/data-grid
+
+PATH: 
+  C:\Program Files\Common Files\Oracle\Java\javapath;C:\UserApps\Scripts\;C:\UserApps\;C:\Users\hai\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\hai\AppData\Local\Programs\Python\Python37\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git_UserApp\cmd;C:\NodeJS_UserApp\;C:\XAMPP_UserApp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\python3.7_UserApp\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\hai\AppData\Local\Programs\AdoptOpenJDK\jdk-11.0.11.9-hotspot\bin;C:\Users\hai\AppData\Local\Microsoft\WindowsApps;;C:\pycharm_UserApp\PyCharm Community Edition 2020.3.3\bin;;C:\Users\hai\AppData\Roaming\npm;C:\VSCode_UserApp\Microsoft VS Code\bin;C:\Users\hai\AppData\Roaming\Composer\vendor\bin;C:\Program Files\heroku\bin;C:\Users\hai\.dotnet\tools
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  15.11.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Projects_User\follow-fullstack\server\node_modules\argon2\lib\binding\napi-v3\argon2.node'
+
+npm manifest: 
+  {
+    "name": "mern-basesource",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index",
+      "test": "jest --verbose",
+      "client": "npm start --prefix ../client",
+      "server": "nodemon index",
+      "dev": "concurrently \"npm run client\" \"npm run server\""
+    },
+    "author": "Nguyen Van Hai",
+    "license": "ISC",
+    "dependencies": {
+      "@withvoid/make-validation": "^1.0.5",
+      "argon2": "^0.28.2",
+      "aws-sdk": "^2.958.0",
+      "cors": "^2.8.5",
+      "dotenv": "^10.0.0",
+      "express": "^4.17.1",
+      "jsonwebtoken": "^8.5.1",
+      "mongoose": "^5.12.14",
+      "mongoose-findorcreate": "^3.0.0",
+      "morgan": "^1.10.0",
+      "multer": "^1.4.2",
+      "react-google-recaptcha": "^2.1.0",
+      "redux": "^4.1.1",
+      "socket.io": "^4.1.3",
+      "stripe": "^8.160.0",
+      "yup": "^0.32.9"
+    },
+    "devDependencies": {
+      "jest": "^27.0.6",
+      "nodemon": "^2.0.7"
+    },
+    "jest": {
+      "testEnvironment": "node"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
