@@ -4,6 +4,7 @@ const router = express.Router();
 const productController = require("../controllers/productController");
 const productSchema = require("../middleware/product/productSchema");
 const validation = require("../middleware/validation");
+const uploadSingleFile = require("../utils/singleFileHelper");
 
 // @route GET /api/products
 // @desc get all products from db
@@ -20,14 +21,19 @@ router.get("/:id", productController.getProductById);
 // @access Private access
 router.post(
   "/insertANewProduct",
-  validation(productSchema),
+  uploadSingleFile,
+  // [validation(productSchema), uploadSingleFile],
   productController.insertAProduct
 );
 
 // @route PUT /api/products/updateAProduct
 // @desc update a specific product
 // @access Private access
-router.put("/updateAProduct", productController.updateAProduct);
+router.put(
+  "/updateAProduct",
+  uploadSingleFile,
+  productController.updateAProduct
+);
 
 // @route DELETE /api/products/deleteAProduct/:id
 // @desc delete a specific product by _id

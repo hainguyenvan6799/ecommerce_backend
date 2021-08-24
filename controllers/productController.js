@@ -1,4 +1,5 @@
 const ProductModel = require("../models/Product");
+const { uploadFile } = require("../services/AWS");
 
 const productController = {
   getProducts: async (req, res) => {
@@ -47,9 +48,11 @@ const productController = {
 
   insertAProduct: async (req, res) => {
     try {
-      const {
-        url,
-        detailUrl,
+      const { data } = req.body;
+
+      const dataInObject = JSON.parse(data);
+
+      let {
         shortTitle,
         longTitle,
         mrp,
@@ -58,7 +61,22 @@ const productController = {
         description,
         discount,
         tagline,
-      } = req.body;
+      } = dataInObject;
+
+      console.log(dataInObject);
+
+      let url = null;
+      let detailUrl = null;
+
+      const result = await uploadFile(req.file);
+
+      const urlFile = await result.Location;
+
+      if (urlFile) {
+        url = urlFile;
+        detailUrl = urlFile;
+      }
+
       const doc = {
         url,
         detailUrl,
@@ -90,7 +108,11 @@ const productController = {
   },
 
   updateAProduct: async (req, res) => {
-    const {
+    const { data } = req.body;
+
+    const dataInObject = JSON.parse(data);
+
+    let {
       productId,
       url,
       detailUrl,
@@ -102,7 +124,17 @@ const productController = {
       description,
       discount,
       tagline,
-    } = req.body;
+    } = dataInObject;
+
+    const result = await uploadFile(req.file);
+
+    const urlFile = await result.Location;
+
+    if (urlFile) {
+      url = urlFile;
+      detailUrl = urlFile;
+    }
+
     // create a filter for a product
     const filter = { _id: productId };
 
@@ -160,12 +192,10 @@ const productController = {
         message: "Can not find productId to delete.",
       });
     } catch (error) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: `Internal server error: ${error.message}`,
-        });
+      return res.status(500).json({
+        success: false,
+        message: `Internal server error: ${error.message}`,
+      });
     }
   },
 };
