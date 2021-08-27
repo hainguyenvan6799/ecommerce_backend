@@ -63,18 +63,18 @@ const productController = {
         tagline,
       } = dataInObject;
 
-      console.log(dataInObject);
-
       let url = null;
       let detailUrl = null;
 
-      const result = await uploadFile(req.file);
+      if (req.file) {
+        const result = await uploadFile(req.file);
 
-      const urlFile = await result.Location;
+        const urlFile = await result.Location;
 
-      if (urlFile) {
-        url = urlFile;
-        detailUrl = urlFile;
+        if (urlFile) {
+          url = urlFile;
+          detailUrl = urlFile;
+        }
       }
 
       const doc = {
@@ -126,13 +126,15 @@ const productController = {
       tagline,
     } = dataInObject;
 
-    const result = await uploadFile(req.file);
+    if (req.file) {
+      const result = await uploadFile(req.file);
 
-    const urlFile = await result.Location;
+      const urlFile = await result.Location;
 
-    if (urlFile) {
-      url = urlFile;
-      detailUrl = urlFile;
+      if (urlFile) {
+        url = urlFile;
+        detailUrl = urlFile;
+      }
     }
 
     // create a filter for a product
