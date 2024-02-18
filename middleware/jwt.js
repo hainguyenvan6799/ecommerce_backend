@@ -12,12 +12,6 @@ const SECRET_KEY = process.env.ACCESS_TOKEN_SECRET;
 const encode = async (req, res, next) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Missing username/password" });
-  }
-
   try {
     const user = await User.getUserByUserName(username);
     if (!user) {
@@ -38,20 +32,28 @@ const encode = async (req, res, next) => {
       );
     }
 
+    delete user.password;
+
+    const configToken = {
+      expiresIn: 17, // 17seconds
+    };
     const accessToken = signToken(
       {
         userId: user._id,
         // userType: user.role
       },
-      process.env.ACCESS_TOKEN_SECRET
+      process.env.ACCESS_TOKEN_SECRET,
+      configToken
     );
 
     req.accessToken = accessToken;
+    req.user = user;
 
     store.dispatch({ type: "SAVE_TOKEN", accessToken });
     next();
   } catch (error) {
-    return res.status(400).json({ success: false, message: error.error });
+    next(error);
+    // return res.status(400).json({ success: false, message: error.error });
   }
 };
 
@@ -68,7 +70,8 @@ const decode = (req, res, next) => {
     // req.userType = decoded.type;
     return next();
   } catch (error) {
-    return res.status(401).json({ success: false, message: error.message });
+    // return res.status(401).json({ success: false, message: error.message });
+    next(error);
   }
 };
 

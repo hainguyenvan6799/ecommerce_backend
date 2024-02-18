@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
 
-const signToken = (payload, secretKey) => {
+const signToken = (payload, secretKey, config = null) => {
+  if (config) {
+    const { expiresIn } = config;
+    return jwt.sign(payload, secretKey, { expiresIn });
+  }
   return jwt.sign(payload, secretKey);
 };
 

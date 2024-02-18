@@ -17,7 +17,7 @@ router.get("/current-user", verifyAuth, authController.getCurrentUser);
 // @route POST /api/auth/login
 // @desc Do login
 // @access Public
-router.post("/login", [encode, validation(loginSchema)], authController.login);
+router.post("/login", [validation(loginSchema), encode], authController.login);
 
 // @route POST /api/auth/signup
 // @desc Do register

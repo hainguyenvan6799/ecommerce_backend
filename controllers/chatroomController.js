@@ -32,6 +32,7 @@ const chatRoomController = {
   getConversationByRoomId: async (req, res) => {
     try {
       const { roomId } = req.params;
+
       const room = await ChatRoom.getChatRoomByRoomId(roomId);
 
       if (!room) {
@@ -62,7 +63,9 @@ const chatRoomController = {
   },
 
   getChatRoomsOfUserId: async (req, res) => {
-    const { userId } = req.body;
+    // const { userId } = req.body;
+    const { userId } = req.params;
+
     const chatRooms = await ChatRoom.findChatRoomThatHasUserId(userId);
     return res.json({ success: true, chatRooms });
   },

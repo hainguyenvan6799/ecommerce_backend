@@ -12,8 +12,14 @@ const {
 const verifyAuth = require("../middleware/auth");
 
 // routes
+// router.post(
+//   "/postMessage/:roomId",
+//   [verifyAuth, upload],
+//   chatMessageController.postMessage
+// );
+
 router.post(
-  "/postMessage/:roomId",
+  "/:roomId",
   [verifyAuth, upload],
   chatMessageController.postMessage
 );

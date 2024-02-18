@@ -8,7 +8,7 @@ const connectDB = require("./config/DB");
 const { corsOptions, socketCors } = require("./utils/cors");
 // const { connectSocketIO } = require("./services/socketIO");
 // const { ChatEvent } = require("./events/ChatEvent");
-const socket = require("./services/test");
+const socket = require("./services/SocketIOConnect");
 const http = require("http");
 const socketio = require("socket.io");
 
