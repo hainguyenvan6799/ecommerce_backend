@@ -20,7 +20,7 @@ let verifyAuth = (req, res, next) => {
     // req.userType = decoded.userType;
     next();
   } catch (error) {
-    return res.status(403).json({ success: false, message: "Invalid token" });
+    next(error);
   }
 };
 

@@ -82,6 +82,7 @@ const authController = {
       success: true,
       message: "User logged in successfully",
       accessToken: req.accessToken,
+      user: req.user,
     });
   },
   signup: async (req, res) => {
@@ -120,6 +121,7 @@ const authController = {
         success: true,
         message: "User created successfully",
         accessToken,
+        user: newUser,
       });
     } catch (error) {
       return res

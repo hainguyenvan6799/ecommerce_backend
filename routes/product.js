@@ -20,7 +20,8 @@ router.get("/:id", productController.getProductById);
 // @desc Create a new product
 // @access Private access
 router.post(
-  "/insertANewProduct",
+  // "/insertANewProduct",
+  "/",
   uploadSingleFile,
   // [validation(productSchema), uploadSingleFile],
   productController.insertAProduct
@@ -30,7 +31,8 @@ router.post(
 // @desc update a specific product
 // @access Private access
 router.put(
-  "/updateAProduct",
+  // "/updateAProduct",
+  "/:id",
   uploadSingleFile,
   productController.updateAProduct
 );
@@ -38,6 +40,7 @@ router.put(
 // @route DELETE /api/products/deleteAProduct/:id
 // @desc delete a specific product by _id
 // @access Private access
-router.delete("/deleteAProduct/:id", productController.deleteAProduct);
+// router.delete("/deleteAProduct/:id", productController.deleteAProduct);
+router.delete("/:id", productController.deleteAProduct);
 
 module.exports = router;

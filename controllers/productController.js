@@ -109,11 +109,12 @@ const productController = {
 
   updateAProduct: async (req, res) => {
     const { data } = req.body;
+    let productId = req.params.id;
 
     const dataInObject = JSON.parse(data);
 
     let {
-      productId,
+      // productId,
       url,
       detailUrl,
       shortTitle,
